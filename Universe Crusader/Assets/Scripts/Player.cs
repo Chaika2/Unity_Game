@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Player :  Sounds         //MonoBehaviour 
+public class Player :  Sounds         
 {
     public float speed;
     public float jumpForce;
@@ -16,7 +16,6 @@ public class Player :  Sounds         //MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     public float attackRange = 2f;
-
 
     private void Start()
     {
@@ -145,9 +144,11 @@ public class Player :  Sounds         //MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die(); // Вызвать метод смерти, если здоровье упало до 0
+            PlaySound(sounds[4]);
+            Invoke("Die",1); // Вызвать метод смерти, если здоровье упало до 0
         }
     }
+
 
     private void Die()
     {
@@ -158,6 +159,6 @@ public class Player :  Sounds         //MonoBehaviour
         gameObject.SetActive(false);
 
         // Загрузка сцены меню (предполагаем, что сцена меню имеет индекс 0)
-        SceneManager.LoadScene("Menu"); // Можно также использовать индекс: SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Menu");
     }
 }
