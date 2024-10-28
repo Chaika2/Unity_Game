@@ -8,7 +8,8 @@ public class Player :  Sounds
     public float speed;
     public float jumpForce;
     public static float maxHealth = 100; // Максимальное здоровье
-    public static float currentHealth; // Текущее здоровье
+    public float currentHealth;
+     public float CurrentHealth => currentHealth;    // Текущее здоровье, теперь нестатическое и публичное
 
     private bool spacePress;
     private bool isGrounded;
@@ -139,26 +140,19 @@ public class Player :  Sounds
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage; // Уменьшение текущего здоровья
+        currentHealth -= damage;
         Debug.Log($"Player took damage: {damage}. Current health: {currentHealth}");
 
         if (currentHealth <= 0)
         {
-            PlaySound(sounds[4]);
-            Invoke("Die",1); // Вызвать метод смерти, если здоровье упало до 0
+            Die();
         }
     }
 
-
     private void Die()
     {
-        // Здесь напишите логику смерти игрока
         Debug.Log("Player has died!");
-
-        // Отключение игрового объекта
         gameObject.SetActive(false);
-
-        // Загрузка сцены меню (предполагаем, что сцена меню имеет индекс 0)
         SceneManager.LoadScene("Menu");
     }
 }
