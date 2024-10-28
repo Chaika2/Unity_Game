@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+public class Player :  Sounds         //MonoBehaviour 
 {
     public float speed;
     public float jumpForce;
@@ -32,12 +32,13 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             spacePress = true;
+            PlaySound(sounds[1]); // Звук прыжка
         }
 
         // Обработка нажатия кнопки удара (например, клавиша "F")
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Attack();
+            Attack(); 
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -79,6 +80,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true; // Игрок на земле
+            PlaySound(sounds[0]);
             animator.SetTrigger("Land"); // Активируйте триггер приземления
         }
     }
@@ -110,8 +112,9 @@ public class Player : MonoBehaviour
         {
             animator.SetTrigger("Attack");
             Debug.Log("Player attacks!");
+            PlaySound(sounds[3]);  // Звук удара 
 
-        // Используем 2D версию OverlapCircle
+            // Используем 2D версию OverlapCircle
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRange);
 
             if (hitEnemies.Length == 0)
