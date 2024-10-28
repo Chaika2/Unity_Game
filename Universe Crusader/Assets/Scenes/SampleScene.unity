@@ -1189,7 +1189,7 @@ Transform:
   m_GameObject: {fileID: 1335465248}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.32, y: -0.08, z: 0}
+  m_LocalPosition: {x: -5.32, y: -0.66, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1285,6 +1285,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4e349dc959014a845b9aa317d1c2b7f0, type: 3}
   - {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
   - {fileID: 8300000, guid: 8b23b175a78d6b5458322e3a6c9905d0, type: 3}
+  - {fileID: 8300000, guid: ff49dd300c55f7c469b501e81bd603c5, type: 3}
   speed: 6
   jumpForce: 9
   attackRange: 0.01
@@ -2188,7 +2189,7 @@ Transform:
   m_GameObject: {fileID: 1982131294}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.52, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
