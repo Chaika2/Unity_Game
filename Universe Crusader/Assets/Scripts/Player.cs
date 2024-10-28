@@ -147,6 +147,14 @@ public class Player : Sounds
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Danger")
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
+
     private void Die()
     {
         Debug.Log("Player has died!");

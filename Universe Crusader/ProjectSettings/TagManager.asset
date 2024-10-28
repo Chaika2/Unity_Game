@@ -7,6 +7,7 @@ TagManager:
   - Strart
   - Ground
   - Enemy
+  - Danger
   layers:
   - Default
   - TransparentFX
