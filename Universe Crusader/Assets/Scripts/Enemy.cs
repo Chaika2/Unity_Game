@@ -20,9 +20,12 @@ public class Enemy : MonoBehaviour
     public float visionRadius = 5f; // Радиус зрения врага
     private bool playerInSight = false; // Находится ли игрок в поле зрения
 
+    private Animator animator;  // Ссылка на аниматор
+
     private void Start()
     {
         currentHealth = maxHealth;
+
         // Поиск объекта с тегом "Player"
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
@@ -30,6 +33,9 @@ public class Enemy : MonoBehaviour
             playerTransform = playerObject.transform;
             playerScript = playerObject.GetComponent<Player>();
         }
+
+        // Получаем аниматор
+        animator = GetComponent<Animator>();
 
         // Добавление кругового коллайдера для зоны зрения
         CircleCollider2D visionCollider = gameObject.AddComponent<CircleCollider2D>();
@@ -49,6 +55,11 @@ public class Enemy : MonoBehaviour
         if (playerInSight && playerTransform != null)
         {
             MoveTowardsPlayer();
+        }
+        else
+        {
+            // Враг не видит игрока, переходит в Idle
+            animator.SetBool("isMoving", false);
         }
     }
 
@@ -74,6 +85,12 @@ public class Enemy : MonoBehaviour
             newPosition.y = Mathf.Clamp(newPosition.y, minY, maxY);
 
             transform.position = newPosition;
+
+            // Устанавливаем анимацию движения
+            animator.SetBool("isMoving", true);
+
+            // Поворот спрайта в сторону игрока
+            FlipSprite(direction);
         }
     }
 
@@ -91,7 +108,6 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        // Логика получения урона самим врагом, если нужно
         Debug.Log("Enemy takes damage: " + damage);
         if (currentHealth <= 0)
         {
@@ -103,6 +119,19 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("Enemy died!");
         Destroy(gameObject);
+    }
+
+    // Поворот спрайта в сторону игрока
+    private void FlipSprite(Vector2 direction)
+    {
+        if (direction.x < 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1); // Поворот вправо
+        }
+        else if (direction.x > 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1); // Поворот влево
+        }
     }
 
     // Этот метод вызывается, когда игрок входит в зону зрения врага

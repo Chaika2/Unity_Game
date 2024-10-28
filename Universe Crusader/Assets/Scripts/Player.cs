@@ -1,15 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Player :  Sounds         
+public class Player : Sounds
 {
     public float speed;
     public float jumpForce;
-    public static float maxHealth = 100; // Максимальное здоровье
+    public static float maxHealth = 100;
     public float currentHealth;
-     public float CurrentHealth => currentHealth;    // Текущее здоровье, теперь нестатическое и публичное
+    public float CurrentHealth => currentHealth;
+
+    public event Action<float> OnHealthChanged; // Событие изменения здоровья
 
     private bool spacePress;
     private bool isGrounded;
@@ -23,65 +26,59 @@ public class Player :  Sounds
         rb2 = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        currentHealth = maxHealth; // Установить текущее здоровье в максимальное значение
+        currentHealth = maxHealth;
     }
 
     private void Update()
     {
-        // Обработка нажатия пробела для прыжка
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             spacePress = true;
-            PlaySound(sounds[1]); // Звук прыжка
+            PlaySound(sounds[1]);
         }
 
-        // Обработка нажатия кнопки удара (например, клавиша "F")
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Attack(); 
+            Attack();
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene(0);
         }
-        
     }
 
     private void FixedUpdate()
     {
-        // Движение игрока
         float horizontalInput = Input.GetAxis("Horizontal");
         Vector3 position = transform.position;
-        position.x += horizontalInput * speed * Time.fixedDeltaTime; 
+        position.x += horizontalInput * speed * Time.fixedDeltaTime;
         transform.position = position;
 
-        // Обработка поворота спрайта
         if (horizontalInput != 0)
         {
-            spriteRenderer.flipX = horizontalInput < 0; // Поворот спрайта в зависимости от направления
+            spriteRenderer.flipX = horizontalInput < 0;
         }
-         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
             if (isGrounded)
             {
-                animator.SetInteger("State", horizontalInput != 0 ? 1 : 0); // переходы между "Idle" и "Walk"
+                animator.SetInteger("State", horizontalInput != 0 ? 1 : 0);
             }
             else
             {
-                animator.SetInteger("State", 2); // "Jump"
+                animator.SetInteger("State", 2);
             }
         }
         Jump();
-}
-
+    }
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = true; // Игрок на земле
+            isGrounded = true;
             PlaySound(sounds[0]);
-            animator.SetTrigger("Land"); // Активируйте триггер приземления
+            animator.SetTrigger("Land");
         }
     }
 
@@ -89,7 +86,7 @@ public class Player :  Sounds
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = false; // Игрок оторвался от земли
+            isGrounded = false;
         }
     }
 
@@ -99,9 +96,9 @@ public class Player :  Sounds
         {
             if (isGrounded)
             {
-                isGrounded = false; 
+                isGrounded = false;
                 rb2.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-                spacePress = false; 
+                spacePress = false;
             }
         }
     }
@@ -112,14 +109,13 @@ public class Player :  Sounds
         {
             animator.SetTrigger("Attack");
             Debug.Log("Player attacks!");
-            PlaySound(sounds[3]);  // Звук удара 
+            PlaySound(sounds[3]);
 
-            // Используем 2D версию OverlapCircle
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRange);
 
             if (hitEnemies.Length == 0)
             {
-                Debug.Log("No enemies hit!");   
+                Debug.Log("No enemies hit!");
             }
 
             foreach (Collider2D enemy in hitEnemies)
@@ -127,20 +123,22 @@ public class Player :  Sounds
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
                 if (enemyScript != null)
                 {
-                    enemyScript.TakeDamage(5); // Наносим 10 единиц урона
+                    enemyScript.TakeDamage(5);
                     Debug.Log("Hit an enemy!");
                 }
                 else
                 {
                     Debug.Log("No Enemy script found!");
                 }
-            }   
+            }
         }
     }
 
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        OnHealthChanged?.Invoke(currentHealth); // Вызываем событие при изменении здоровья
+
         Debug.Log($"Player took damage: {damage}. Current health: {currentHealth}");
 
         if (currentHealth <= 0)

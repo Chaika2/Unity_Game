@@ -5,33 +5,33 @@ using UnityEngine.UI;
 public class UI : MonoBehaviour
 {
     public Image hpBar;
-    public Player player; // Ссылка на объект игрока
+    public Player player;
 
-    // Start is called before the first frame update
     void Start()
     {
         if (player == null)
         {
-            player = FindObjectOfType<Player>(); // Поиск объекта игрока, если ссылка не задана
+            player = FindObjectOfType<Player>();
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // Обновление шкалы здоровья каждый кадр через свойство CurrentHealth
+        // Подписка на событие изменения здоровья
+        player.OnHealthChanged += UpdateHealthBar;
+        
+        // Устанавливаем начальное значение шкалы здоровья
         hpBar.fillAmount = player.CurrentHealth / Player.maxHealth;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void UpdateHealthBar(float currentHealth)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        hpBar.fillAmount = currentHealth / Player.maxHealth;
+    }
+
+    private void OnDestroy()
+    {
+        // Отписка от события
+        if (player != null)
         {
-            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                player.TakeDamage(enemy.attackDamage); // Используем метод TakeDamage игрока
-            }
+            player.OnHealthChanged -= UpdateHealthBar;
         }
     }
 }
