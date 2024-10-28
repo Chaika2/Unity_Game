@@ -81,7 +81,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         Player.currentHealth -= damage;
         Debug.Log("Enemy takes damage: " + damage);
