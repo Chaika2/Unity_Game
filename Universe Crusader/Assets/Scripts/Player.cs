@@ -7,8 +7,8 @@ public class Player : MonoBehaviour
 {
     public float speed;
     public float jumpForce;
-    public int maxHealth = 100; // Максимальное здоровье
-    public int currentHealth; // Текущее здоровье
+    public static float maxHealth = 100; // Максимальное здоровье
+    public static float currentHealth; // Текущее здоровье
 
     private bool spacePress;
     private bool isGrounded;
@@ -135,7 +135,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage; // Уменьшение текущего здоровья
         Debug.Log($"Player took damage: {damage}. Current health: {currentHealth}");

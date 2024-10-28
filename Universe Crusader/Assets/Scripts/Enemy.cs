@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int health = 100;
+
     public float moveSpeed = 3f; // Скорость движения врага
     public float attackRange = 2f; // Радиус атаки врага
     private Transform player; // Ссылка на трансформацию игрока
@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     // Определение границ области
     public float minX, maxX, minY, maxY;
     
-    public int attackDamage = 10; // Урон, который враг наносит игроку
+    public static float attackDamage = 10; // Урон, который враг наносит игроку
     public float attackCooldown = 2f; // Время между атаками
     private float lastAttackTime = 0f; // Время последней атаки
     
@@ -83,10 +83,10 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
+        Player.currentHealth -= damage;
         Debug.Log("Enemy takes damage: " + damage);
 
-        if (health <= 0)
+        if (Player.currentHealth <= 0)
         {
             Die();
         }
