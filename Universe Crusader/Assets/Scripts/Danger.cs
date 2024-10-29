@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Danger : MonoBehaviour
+public class Danger : Sounds
 {
     // Start is called before the first frame update
     Rigidbody2D rb;
