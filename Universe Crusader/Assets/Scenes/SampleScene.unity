@@ -2881,8 +2881,8 @@ GameObject:
   - component: {fileID: 1335465254}
   - component: {fileID: 1335465253}
   - component: {fileID: 1335465255}
-  - component: {fileID: 1335465256}
   - component: {fileID: 1335465257}
+  - component: {fileID: 1335465256}
   - component: {fileID: 1335465258}
   m_Layer: 0
   m_Name: Player
