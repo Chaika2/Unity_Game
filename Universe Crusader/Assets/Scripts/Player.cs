@@ -134,18 +134,18 @@ public class Player : Sounds
         }
     }
 
-    public void TakeDamage(float damage)
-    {
+   public void TakeDamage(float damage)
+   {
         currentHealth -= damage;
         OnHealthChanged?.Invoke(currentHealth); // Вызываем событие при изменении здоровья
-
+    
         Debug.Log($"Player took damage: {damage}. Current health: {currentHealth}");
 
         if (currentHealth <= 0)
         {
             Die();
         }
-    }
+   }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
