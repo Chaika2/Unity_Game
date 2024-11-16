@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class BossHealth : MonoBehaviour
 {
-
-    public float health = 500;
-
-    public GameObject deathEffect;
+    public Animator animator;
+    public float health = 20;
+    //public GameObject deathEffect;
 
     public bool isInvulnerable = false;
 
@@ -17,7 +16,7 @@ public class BossHealth : MonoBehaviour
             return;
 
         health -= damage;
-
+        animator.SetTrigger("TakeDamage");
         if (health <= 0)
         {
             Die();
@@ -26,8 +25,16 @@ public class BossHealth : MonoBehaviour
 
     void Die()
     {
-        Instantiate(deathEffect, transform.position, Quaternion.identity);
+        animator.SetBool("IsDead",true);
+        //Instantiate(deathEffect, transform.position, Quaternion.identity);
+
+        Invoke("DestroyGameObject", 2);
+    }
+
+    void DestroyGameObject()
+    {
         Destroy(gameObject);
     }
+
 
 }

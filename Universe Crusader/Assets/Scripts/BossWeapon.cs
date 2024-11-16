@@ -30,7 +30,6 @@ public class BossAttack : MonoBehaviour
         Vector3 pos = transform.position;
         pos += transform.right * attackOffset.x;
         pos += transform.up * attackOffset.y;
-
         Gizmos.DrawWireSphere(pos, attackRange);
     }
 }

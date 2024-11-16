@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -110,9 +111,8 @@ public class Player : Sounds
             animator.SetTrigger("Attack");
             Debug.Log("Player attacks!");
             PlaySound(sounds[3]);
-
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRange);
-
+            
             if (hitEnemies.Length == 0)
             {
                 Debug.Log("No enemies hit!");
@@ -121,9 +121,24 @@ public class Player : Sounds
             foreach (Collider2D enemy in hitEnemies)
             {
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
+
                 if (enemyScript != null)
                 {
                     enemyScript.TakeDamage(5);
+                    Debug.Log("Hit an enemy!");
+                }
+                else
+                {
+                    Debug.Log("No Enemy script found!");
+                }
+            }
+            foreach (Collider2D boss in hitEnemies)
+            {
+                BossHealth bossScript = boss.GetComponent<BossHealth>();
+
+                if (bossScript != null)
+                {
+                    bossScript.TakeDamage(5);
                     Debug.Log("Hit an enemy!");
                 }
                 else
@@ -151,7 +166,7 @@ public class Player : Sounds
     {
         if (other.tag == "Danger")
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);   //Перезапуск уровня при задевании ловушки
         }
     }
 
@@ -159,6 +174,6 @@ public class Player : Sounds
     {
         Debug.Log("Player has died!");
         gameObject.SetActive(false);
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

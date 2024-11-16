@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 460550320}
   - component: {fileID: 460550321}
   - component: {fileID: 460550322}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -592,12 +592,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackDamage: 20
-  enragedAttackDamage: 40
   attackOffset: {x: -1, y: -1.5, z: 0}
   attackRange: 2
   attackMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!114 &460550322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -610,8 +609,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1419bebdc837d1943b6f4fa806c85e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  deathEffect: {fileID: 0}
+  animator: {fileID: 460550315}
+  health: 20
+  deathEffect: {fileID: 1837578098}
   isInvulnerable: 0
 --- !u!1 &479672933
 GameObject:
@@ -1227,7 +1227,7 @@ GameObject:
   - component: {fileID: 784289672}
   - component: {fileID: 784289667}
   - component: {fileID: 784289665}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1270,7 +1270,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 8.749525
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -1402,7 +1402,7 @@ MonoBehaviour:
   speed: 6
   jumpForce: 9
   currentHealth: 100
-  attackRange: 0.01
+  attackRange: 1
 --- !u!61 &784289669
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2922,7 +2922,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.1317321}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2933,7 +2933,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 8.8, y: 4.55}
+  m_Size: {x: 8.8, y: 5.472125}
   m_EdgeRadius: 0
 --- !u!212 &1276924587
 SpriteRenderer:
@@ -3839,7 +3839,7 @@ GameObject:
   - component: {fileID: 1680969725}
   - component: {fileID: 1680969727}
   - component: {fileID: 1680969726}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -4226,10 +4226,10 @@ RectTransform:
   - {fileID: 917914118}
   m_Father: {fileID: 1915012264}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -671.02, y: 346.59}
-  m_SizeDelta: {x: 85.45, y: 83.63}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 94, y: -146.05002}
+  m_SizeDelta: {x: 85.45, y: 79.74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1837578100
 MonoBehaviour:

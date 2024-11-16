@@ -15,8 +15,8 @@ TagManager:
   - enemyLayer
   - Water
   - UI
-  - 
-  - 
+  - playerLayer
+  - bossLayer
   - 
   - 
   - 
