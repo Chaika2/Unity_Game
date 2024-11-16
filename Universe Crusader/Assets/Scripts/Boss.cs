@@ -7,7 +7,7 @@ public class Boss : MonoBehaviour
     public Transform player;
     public bool isFlipped = false;
     //public Animator animator;
-    public void LookAtPlayer()
+    public void LookAtPlayer()  //Взгляд на игрока
     {
         Vector3 flipped = transform.localScale;
         flipped.z *= -1f;
