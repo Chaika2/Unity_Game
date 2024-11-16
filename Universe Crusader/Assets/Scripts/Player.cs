@@ -170,10 +170,26 @@ public class Player : Sounds
         }
     }
 
+
+
+    /*
     private void Die()
     {
         Debug.Log("Player has died!");
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        Destroy(gameObject);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    */
+
+    private void Die()
+    {
+        animator.SetBool("isDead",true);
+        Invoke("DestroyGameObject", 1);
+    }
+    void DestroyGameObject()
+    {
+        Destroy(gameObject);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BossAttack : MonoBehaviour
+public class BossAttack : Sounds //MonoBehaviour
 {
     public float AttackDamage = 20;
     public Vector3 attackOffset;
@@ -22,6 +22,7 @@ public class BossAttack : MonoBehaviour
             if (colInfo != null)
             {
                 colInfo.GetComponent<Player>().TakeDamage(AttackDamage);
+                PlaySound(sounds[0]);
             }
         }
 

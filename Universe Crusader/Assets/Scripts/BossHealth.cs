@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossHealth : MonoBehaviour
+public class BossHealth : Sounds //MonoBehaviour
 {
     public Animator animator;
     public float health = 20;
@@ -25,6 +25,7 @@ public class BossHealth : MonoBehaviour
 
     void Die()
     {
+        PlaySound(sounds[0]);
         animator.SetBool("IsDead",true);
         //Instantiate(deathEffect, transform.position, Quaternion.identity);
 
