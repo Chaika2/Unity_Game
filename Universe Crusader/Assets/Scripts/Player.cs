@@ -184,8 +184,10 @@ public class Player : Sounds
 
     private void Die()
     {
+        PlaySound(sounds[5], volume: 0.3f);
         animator.SetBool("isDead",true);
-        Invoke("DestroyGameObject", 1);
+        gameObject.GetComponent<Renderer>().enabled = false;
+        Invoke("DestroyGameObject", 2);
     }
     void DestroyGameObject()
     {

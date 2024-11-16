@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class MainMenu : Sounds
 {
 
+
     void LoadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -15,21 +16,23 @@ public class MainMenu : Sounds
     {
         Application.Quit();
     }
-   public void PlayGame()
-   {
+
+    /*
+    public void PlayGame()
+    {
         PlaySound(sounds[0]);
         Invoke("LoadScene", 1);
-   }
+    }
+    */
 
 
-
-   public void ExitGame()
-   {
+    public void ExitGame()
+    {
         PlaySound(sounds[0]);
         Invoke("Quit", 1);
         Debug.Log("Игра закрылась");
 
-   }
+    }
 
 }
 
