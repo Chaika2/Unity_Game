@@ -29,7 +29,7 @@ public class BossHealth : Sounds //MonoBehaviour
         animator.SetBool("IsDead",true);
         //Instantiate(deathEffect, transform.position, Quaternion.identity);
 
-        Invoke("DestroyGameObject", 2);
+        Invoke("DestroyGameObject", 1);
     }
 
     void DestroyGameObject()
