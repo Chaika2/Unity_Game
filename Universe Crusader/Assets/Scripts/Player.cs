@@ -152,6 +152,7 @@ public class Player : Sounds
    public void TakeDamage(float damage)
    {
         currentHealth -= damage;
+        PlaySound(sounds[6]);
         OnHealthChanged?.Invoke(currentHealth); // Вызываем событие при изменении здоровья
     
         Debug.Log($"Player took damage: {damage}. Current health: {currentHealth}");
