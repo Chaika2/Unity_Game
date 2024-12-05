@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: tileset_mockup_01_2
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -498844672, guid: da683eed5fbfc384891a5c7c95167b18, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.68235296, b: 0, a: 1}
   m_Transform:
     e00: 1
     e01: 0
