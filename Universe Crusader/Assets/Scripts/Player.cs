@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
+//using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -152,6 +152,7 @@ public class Player : Sounds
    public void TakeDamage(float damage)
    {
         currentHealth -= damage;
+        PlaySound(sounds[6]);
         OnHealthChanged?.Invoke(currentHealth); // Вызываем событие при изменении здоровья
     
         Debug.Log($"Player took damage: {damage}. Current health: {currentHealth}");
