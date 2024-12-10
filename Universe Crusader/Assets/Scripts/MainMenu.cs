@@ -3,18 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : Sounds
 {
-   public void Play(int index)
-   {
-        SceneManager.LoadScene(index);
-   }
 
 
+    void LoadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
 
-   public void Exet()
-   {
+    void Quit()
+    {
         Application.Quit();
-   }
+    }
+
+    /*
+    public void PlayGame()
+    {
+        PlaySound(sounds[0]);
+        Invoke("LoadScene", 1);
+    }
+    */
+
+
+    public void ExitGame()
+    {
+        PlaySound(sounds[0]);
+        Invoke("Quit", 1);
+        Debug.Log("Игра закрылась");
+
+    }
 
 }
+
