@@ -18,7 +18,7 @@ TagManager:
   - playerLayer
   - bossLayer
   - environmentLayer
-  - 
+  - dangerLayer
   - 
   - 
   - 
@@ -44,4 +44,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 1663091647
     locked: 0

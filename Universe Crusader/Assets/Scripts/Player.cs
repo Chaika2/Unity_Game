@@ -20,7 +20,7 @@ public class Player : Sounds
     private Rigidbody2D rb2;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
-    public float attackRange = 2f;
+    public float attackRange = 5f;
 
     private void Start()
     {
