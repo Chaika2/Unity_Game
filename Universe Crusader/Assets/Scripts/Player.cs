@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+
 //using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,6 +23,10 @@ public class Player : Sounds
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     public float attackRange = 5f;
+    public float attackCooldown = 1f;
+    private float _nextAttackTime;
+    public GameObject deathMenu;
+    public GameObject pauseMenu;
 
     private void Start()
     {
@@ -40,11 +46,20 @@ public class Player : Sounds
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Attack();
+            TryAttack();
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene(0);
+            if (!pauseMenu.activeSelf)
+            {
+                pauseMenu.SetActive(true);
+                Time.timeScale = 0f;
+            }
+            else if (pauseMenu.activeSelf)
+            {
+                pauseMenu.SetActive(false);
+                Time.timeScale = 1f;
+            }
         }
     }
 
@@ -104,6 +119,18 @@ public class Player : Sounds
         }
     }
 
+    void TryAttack()
+    {
+        if (Time.time >= _nextAttackTime)
+        {
+            Attack();
+            _nextAttackTime = Time.time + attackCooldown;
+        }
+        else
+        {
+            Debug.Log("Атака на кулдауне!");
+        }
+    }
     private void Attack()
     {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
@@ -167,7 +194,7 @@ public class Player : Sounds
     {
         if (other.tag == "Danger")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);   //Перезапуск уровня при задевании ловушки
+            Die();   
         }
     }
 
@@ -186,9 +213,14 @@ public class Player : Sounds
     private void Die()
     {
         PlaySound(sounds[5], volume: 0.3f);
-        animator.SetBool("isDead",true);
+        //animator.SetBool("isDead",true);
+        if (!deathMenu.activeSelf)
+        {
+            deathMenu.SetActive(true);
+            Time.timeScale = 0f;
+        }
         gameObject.GetComponent<Renderer>().enabled = false;
-        Invoke("DestroyGameObject", 2);
+        //Invoke("DestroyGameObject", 2);
     }
     void DestroyGameObject()
     {

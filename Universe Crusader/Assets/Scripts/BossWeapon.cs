@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BossAttack : Sounds //MonoBehaviour
 {
-    public float AttackDamage = 20;
+    public float AttackDamage = 10;
     public Vector3 attackOffset;
     public float attackRange = 1f;
     public LayerMask attackMask;
