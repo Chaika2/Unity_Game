@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,6 +20,9 @@ public class Player : Sounds
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     public float attackRange = 5f;
+    public float attackCooldown = 1f; // Задержка между атаками
+
+    private float lastAttackTime; // Время последней атаки
 
     private void Start()
     {
@@ -28,6 +30,7 @@ public class Player : Sounds
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
+        lastAttackTime = -attackCooldown; // Чтобы атака была доступна сразу
     }
 
     private void Update()
@@ -106,13 +109,19 @@ public class Player : Sounds
 
     private void Attack()
     {
+        if (Time.time - lastAttackTime < attackCooldown)
+        {
+            Debug.Log("Attack is on cooldown!");
+            return;
+        }
+
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
             animator.SetTrigger("Attack");
             Debug.Log("Player attacks!");
             PlaySound(sounds[3]);
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRange);
-            
+
             if (hitEnemies.Length == 0)
             {
                 Debug.Log("No enemies hit!");
@@ -139,29 +148,31 @@ public class Player : Sounds
                 if (bossScript != null)
                 {
                     bossScript.TakeDamage(5);
-                    Debug.Log("Hit an enemy!");
+                    Debug.Log("Hit a boss!");
                 }
                 else
                 {
-                    Debug.Log("No Enemy script found!");
+                    Debug.Log("No Boss script found!");
                 }
             }
+
+            lastAttackTime = Time.time; // Обновляем время последней атаки
         }
     }
 
-   public void TakeDamage(float damage)
-   {
+    public void TakeDamage(float damage)
+    {
         currentHealth -= damage;
         PlaySound(sounds[6]);
         OnHealthChanged?.Invoke(currentHealth); // Вызываем событие при изменении здоровья
-    
+
         Debug.Log($"Player took damage: {damage}. Current health: {currentHealth}");
 
         if (currentHealth <= 0)
         {
             Die();
         }
-   }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -171,22 +182,10 @@ public class Player : Sounds
         }
     }
 
-
-
-    /*
-    private void Die()
-    {
-        Debug.Log("Player has died!");
-        //gameObject.SetActive(false);
-        Destroy(gameObject);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-    */
-
     private void Die()
     {
         PlaySound(sounds[5], volume: 0.3f);
-        animator.SetBool("isDead",true);
+        animator.SetBool("isDead", true);
         gameObject.GetComponent<Renderer>().enabled = false;
         Invoke("DestroyGameObject", 2);
     }

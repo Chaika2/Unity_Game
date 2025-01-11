@@ -1126,6 +1126,7 @@ MonoBehaviour:
   jumpForce: 7
   currentHealth: 100
   attackRange: 1
+  attackCooldown: 0.55
 --- !u!61 &291752776
 BoxCollider2D:
   m_ObjectHideFlags: 0
